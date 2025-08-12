@@ -19,20 +19,18 @@ We also recommend that you include a [CITATION.cff](https://docs.github.com/en/r
 ```
 HDR-SMood-challenge-sample
 │
-├── <MODEL NAME>_code_submission
-│   ├── clf.pkl
-│   ├── metadata
-│   ├── model.py
-│   └── requirements.txt
-│
-├── <MODEL NAME>_train
-│   ├── classifier.py
-│   ├── data_utils.py
-│   ├── dataset.py
-│   ├── evaluation.py
-│   ├── model_utils.py
-│   └── training.py
-│
+├── baselines
+│   ├── training
+│   │   └── <MODEL NAME>
+│   │       ├── evaluation.py
+│   │       ├── model.py
+│   │       ├── train.py
+│   │       └── utils.py
+│   └── submissions
+│       └── <MODEL NAME>
+│           ├── model.pth
+│           ├── model.py
+│           └── requirements.txt
 ├── .gitignore
 ├── LICENSE
 └── README.md
@@ -47,6 +45,33 @@ conda activate butterfly-sample
 pip install -r requirements.txt
 jupyter lab
 -->
+
+## Installation & Running
+
+### Installation
+If you have `uv` simply run `uv sync`, otherwise you can use the `requirements.txt` file with either `conda` or `pip`.
+
+### Training
+An example training run can be executed by running the following:
+```
+python baselines/training/train.py
+```
+
+with `uv` do:
+```
+uv run python baselines/training/train.py
+```
+
+### Evaluation
+Aftering training, you can locally evaluate your model by running the following:
+```
+python baselines/training/evaluation.py
+```
+
+with `uv` do:
+```
+uv run python baselines/training/evaluation.py
+```
 
 ## References
 List any sources used in developing your model (e.g., baseline model that was fine-tuned).
