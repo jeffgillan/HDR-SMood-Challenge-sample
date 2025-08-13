@@ -142,15 +142,21 @@ class Model:
         bioclip, transforms = get_bioclip()
         self.transforms = transforms
         model_path = os.path.join(os.path.dirname(__file__), "model.pth")
-        self.model = BioClip2_DeepFeatureRegressor(bioclip=bioclip, n_last_trainable_resblocks=2)
+        self.model = BioClip2_DeepFeatureRegressor(bioclip=bioclip, n_last_trainable_resblocks=2).cuda()
         self.model.load_state_dict(torch.load(model_path))
             
 
     def predict(self, datapoints):
-        images = [entry['img'] for entry in datapoints]
+        images = [entry['relative_img'] for entry in datapoints]
         tensor_images = torch.stack([self.transforms(image) for image in images])
         #model outputs 30d,1y,2y
-        outputs = self.model(tensor_images)
+        outputs = []
+        dset = torch.utils.data.TensorDataset(tensor_images)
+        loader = torch.utils.data.DataLoader(dset, batch_size=4, shuffle=False)
+        for batch in loader:
+            x = batch[0]
+            outputs.append(self.model(x.cuda()).detach().cpu())
+        outputs = torch.cat(outputs)
         mu = torch.mean(outputs, dim=0)
         sigma = torch.std(outputs,dim=0)
         return {

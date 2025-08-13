@@ -171,16 +171,23 @@ class Model:
         self.transforms = transforms
         model_path = os.path.join(os.path.dirname(__file__), "model.pth")
         known_domain_ids = json.load(open(os.path.join(os.path.dirname(__file__), "known_domain_ids.json")))
-        self.model = BioClip2_DeepFeatureRegressorWithDomainID(bioclip=bioclip, n_last_trainable_resblocks=2, known_domain_ids=known_domain_ids)
+        self.model = BioClip2_DeepFeatureRegressorWithDomainID(bioclip=bioclip, n_last_trainable_resblocks=2, known_domain_ids=known_domain_ids).cuda()
         self.model.load_state_dict(torch.load(model_path))
             
 
     def predict(self, datapoints):
-        images = [entry['img'] for entry in datapoints]
+        images = [entry['relative_img'] for entry in datapoints]
         tensor_images = torch.stack([self.transforms(image) for image in images])
-        domain_ids = [entry['domain_id'] for entry in datapoints]
+        domain_ids = torch.tensor([entry['domainID'] for entry in datapoints])
         #model outputs 30d,1y,2y
-        outputs = self.model(tensor_images, domain_ids=domain_ids)
+        outputs = []
+        dset = torch.utils.data.TensorDataset(tensor_images, domain_ids)
+        loader = torch.utils.data.DataLoader(dset, batch_size=4, shuffle=False)
+        for batch in loader:
+            x = batch[0]
+            dids = batch[1]
+            outputs.append(self.model(x.cuda(), domain_ids=dids).detach().cpu())
+        outputs = torch.cat(outputs)
         mu = torch.mean(outputs, dim=0)
         sigma = torch.std(outputs,dim=0)
         return {

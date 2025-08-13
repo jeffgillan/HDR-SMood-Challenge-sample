@@ -73,15 +73,24 @@ class Model:
         dino, processor = get_DINO()
         self.processor = processor
         model_path = os.path.join(os.path.dirname(__file__), "model.pth")
-        self.model = DINO_DeepRegressor(dino=dino)
+        self.model = DINO_DeepRegressor(dino=dino).cuda()
         self.model.load_state_dict(torch.load(model_path))
             
 
     def predict(self, datapoints):
-        images = [entry['img'] for entry in datapoints]
+        images = [entry['relative_img'] for entry in datapoints]
         tensor_images = torch.stack([self.processor(image, return_tensors="pt")['pixel_values'][0] for image in images])
         #model outputs 30d,1y,2y
-        outputs = self.model(tensor_images)
+        outputs = []
+        dset = torch.utils.data.TensorDataset(tensor_images)
+        loader = torch.utils.data.DataLoader(dset, batch_size=4, shuffle=False)
+        for batch in loader:
+            x = batch[0]
+            out = self.model(x.cuda()).detach().cpu()
+            if len(out.shape) == 1:
+                out = out.unsqueeze(0)
+            outputs.append(out)
+        outputs = torch.cat(outputs)
         mu = torch.mean(outputs, dim=0)
         sigma = torch.std(outputs,dim=0)
         return {
