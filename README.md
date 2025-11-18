@@ -86,14 +86,19 @@ More information on the dataset [here](https://www.codabench.org/competitions/98
 If you have `uv` simply run `uv sync`, otherwise you can use the `requirements.txt` file with either `conda` or `pip`.
 
 ### Training
-An example training run can be executed by running the following:
-```
-python baselines/training/train.py
-```
 
-with `uv` do:
+If you are running the scripts within a container and all the software has already been installed:
+
 ```
-uv run python baselines/training/BioClip2/train.py --batch_size 8 --num_workers 4 --epochs 100
+python HDR-SMood-Challenge-sample/baselines/training/BioClip2/train.py --batch_size 16 --num_workers 4 --epochs 100
+```
+<br>
+
+If you need to install all the software: 
+
+with `uv` type:
+```
+uv run python HDR-SMood-Challenge-sample/baselines/training/BioClip2/train.py --batch_size 8 --num_workers 4 --epochs 100
 ```
 
 ### Command flags
