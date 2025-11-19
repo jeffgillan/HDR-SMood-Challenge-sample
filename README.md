@@ -80,14 +80,18 @@ More information on the dataset [here](https://www.codabench.org/competitions/98
 <br>
 <br>
 
-## Installation & Running
+## Installation
+If you a running the scripts in a docker container in Cyverse, the sofware is already totally installed. 
 
-### Installation
-If you have `uv` simply run `uv sync`, otherwise you can use the `requirements.txt` file with either `conda` or `pip`.
+If you need install the python libraries, you will do so during the _training_ command. 
 
-### Training
 
-If you are running the scripts within a container and all the software has already been installed:
+<br>
+<br>
+
+## Training
+
+If you are running the scripts within a Cyverse container and all the software has already been installed:
 
 ```
 python HDR-SMood-Challenge-sample/baselines/training/BioClip2/train.py --batch_size 16 --num_workers 4 --epochs 100
@@ -149,10 +153,10 @@ Hugging Face token passed to `datasets.load_dataset` for gated/private datasets 
 <br>
 <br>
 
-### Evaluation
+## Evaluation
 Aftering training, you can locally evaluate your model by running the following:
 ```
-python baselines/training/evaluation.py
+python HDR-SMood-Challenge-sample/baselines/training/BioClip2/evaluation.py --batch_size 16 --num_workers 4
 ```
 
 with `uv` do:
@@ -163,8 +167,16 @@ uv run python baselines/training/evaluation.py
 <br>
 <br>
 
+### Command Flags
 
+| Flag          | Default | Purpose                                                                 |
+  |---------------|---------|-------------------------------------------------------------------------|
+  | --batch_size  | 64      | Batch size for evaluation DataLoader                                    |
+  | --num_workers | 4       | Number of parallel workers for data loading (set to 0 if memory issues) |
+  | --hf_token    | None    | HuggingFace token (only needed for rate limits or private datasets)     |
 
+<br>
+<br>
 
 ## Python Scripts Explainer
 ### utils.py 
