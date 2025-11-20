@@ -177,6 +177,11 @@ uv run python HDR-SMood-Challenge-sample/baselines/training/BioClip2/evaluation.
 <br>
 <br>
 
+## Resource Use
+
+Shows GPU compute utilization % and memory
+`watch -n 1 'nvidia-smi --query-gpu=utilization.gpu,utilization.memory,memory.used,memory.total --format=csv'`
+
 ## Python Scripts Explainer
 ### utils.py 
 A toolkit of helper functions that the training and evaluation scripts use repeatedly. Think of it as a shared
