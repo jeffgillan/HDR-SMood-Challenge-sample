@@ -5,6 +5,7 @@
 
 This repository contains baseline training code and submission templates for the **2025 HDR Scientific Mood (Modeling out of distribution) Challenge: Beetles as Sentinel Taxa**. Use this as a reference for understanding the challenge and developing your own solutions.
 
+<img width="894" height="355" alt="Screenshot 2025-11-21 at 6 58 09 PM" src="https://github.com/user-attachments/assets/1bef7ee1-6b6f-4936-806c-6aac4dc04e77" />
 
 <br>
 <br>
