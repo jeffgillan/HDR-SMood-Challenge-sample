@@ -215,7 +215,8 @@ jobs:
           
           # Destination in CyVerse
           #CYVERSE_DEST="/iplant/home/${{ secrets.CYVERSE_USERNAME }}/gpu_training_results/${USER_NAME}/${RUN_ID}"
-          CYVERSE_DEST="/iplant/home/shared/esiil/HDR_ML_challenge_2025"
+          #CYVERSE_DEST="/iplant/home/shared/esiil/HDR_ML_challenge_2025"
+          Cyverse_DEST="/iplant/home/jgillan/hackathon"
           echo "Destination: ${CYVERSE_DEST}"
           echo ""
           
