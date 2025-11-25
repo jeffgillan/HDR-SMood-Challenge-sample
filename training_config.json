@@ -1,0 +1,6 @@
+{
+  "model": "bioclip2",
+  "epochs": 5,
+  "batch_size": 32,
+  "num_workers": 8
+}
