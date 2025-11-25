@@ -101,6 +101,10 @@ python HDR-SMood-Challenge-sample/baselines/training/BioClip2/train.py --batch_s
 
 If you need to install all the software: 
 
+Install uv:
+
+`curl -LsSf https://astral.sh/uv/install.sh | sh`
+
 with `uv` type:
 ```
 uv run python HDR-SMood-Challenge-sample/baselines/training/BioClip2/train.py --batch_size 8 --num_workers 4 --epochs 100
