@@ -222,7 +222,7 @@ jobs:
           
           # Create directory structure
           echo "Creating directory structure..."
-          gocmd mkdir -p ${CYVERSE_DEST}
+          
           
           # Upload outputs (from wherever the script saved them)
           if [ -d ${OUTPUT_DIR} ]; then
