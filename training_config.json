@@ -1,6 +1,6 @@
 {
   "script_path": "baselines/training/BioClip2/train.py",
-  "epochs": 5,
+  "epochs": 6,
   "batch_size": 32,
   "num_workers": 8,
   "output_dir": "baselines/training/BioClip2"
