@@ -29,7 +29,7 @@ on:
 jobs:
   train:
     runs-on: [self-hosted, runner-gpu]
-    timeout-minutes: 480
+    timeout-minutes: 1000
     
     concurrency:
       group: gpu-queue
@@ -104,7 +104,19 @@ jobs:
           BATCH_SIZE=$(jq -r '.batch_size // 32' training_config.json)
           NUM_WORKERS=$(jq -r '.num_workers // 8' training_config.json)
           EPOCHS=$(jq -r '.epochs // 5' training_config.json)
-          OUTPUT_DIR=$(jq -r '.output_dir // "outputs"' training_config.json)
+          CYVERSE_OUTPUT_PATH=$(jq -r '.cyverse_output_path' training_config.json)
+
+          # Validate CyVerse output path
+          if [ "${CYVERSE_OUTPUT_PATH}" == "null" ] || [ -z "${CYVERSE_OUTPUT_PATH}" ]; then
+            echo "ERROR: cyverse_output_path is required in training_config.json"
+            exit 1
+          fi
+          
+          # Derive output directory from script path
+          # If script is "baselines/training/BioClip2/train.py"
+          # Then OUTPUT_DIR becomes "baselines/training/BioClip2"
+          SCRIPT_DIR=$(dirname ${SCRIPT_PATH})
+          OUTPUT_DIR="${SCRIPT_DIR}"
           
           # Save as environment variables
           echo "SCRIPT_PATH=${SCRIPT_PATH}" >> $GITHUB_ENV
@@ -112,6 +124,7 @@ jobs:
           echo "NUM_WORKERS=${NUM_WORKERS}" >> $GITHUB_ENV
           echo "EPOCHS=${EPOCHS}" >> $GITHUB_ENV
           echo "OUTPUT_DIR=${OUTPUT_DIR}" >> $GITHUB_ENV
+          echo "CYVERSE_OUTPUT_PATH=${CYVERSE_OUTPUT_PATH}" >> $GITHUB_ENV
           
           # Print loaded configuration
           echo "================================================"
@@ -120,7 +133,8 @@ jobs:
           echo "  Batch Size: ${BATCH_SIZE}"
           echo "  Num Workers: ${NUM_WORKERS}"
           echo "  Epochs: ${EPOCHS}"
-          echo "  Output Directory: ${OUTPUT_DIR}"
+          echo "  Output Directory (derived): ${OUTPUT_DIR}"
+          echo "  CyVerse Destination: ${CYVERSE_OUTPUT_PATH}"
           echo "================================================"
     
       
@@ -166,6 +180,7 @@ jobs:
           echo "  Batch Size: ${BATCH_SIZE}"
           echo "  Num Workers: ${NUM_WORKERS}"
           echo "  Epochs: ${EPOCHS}"
+          echo "  Output Directory: ${OUTPUT_DIR}"
           echo ""
           
           # Check if script exists
@@ -213,21 +228,32 @@ jobs:
           echo "Uploading Results to CyVerse"
           echo "================================================"
           
-          # Destination in CyVerse
-          #CYVERSE_DEST="/iplant/home/${{ secrets.CYVERSE_USERNAME }}/gpu_training_results/${USER_NAME}/${RUN_ID}"
-          #CYVERSE_DEST="/iplant/home/shared/esiil/HDR_ML_challenge_2025"
-          CYVERSE_DEST="/iplant/home/jgillan/hackathon"
-          echo "Destination: ${CYVERSE_DEST}"
+          # Use the user-specified CyVerse destination path
+          CYVERSE_DEST="${CYVERSE_OUTPUT_PATH}"
+          
+          echo "Source (local): ${OUTPUT_DIR}"
+          echo "Destination (CyVerse): ${CYVERSE_DEST}"
           echo ""
           
           # Create directory structure
           echo "Creating directory structure..."
+          #gocmd mkdir -p ${CYVERSE_DEST}
           
-          
-          # Upload outputs (from wherever the script saved them)
+          # Upload outputs from the script's directory
           if [ -d ${OUTPUT_DIR} ]; then
             echo "Uploading outputs from ${OUTPUT_DIR}..."
-            gocmd put -f ${OUTPUT_DIR}/model.pth ${CYVERSE_DEST}/outputs
+            
+            # Upload all files from the output directory
+            # -f flag forces overwrite if files exist
+            # -r flag for recursive (if there are subdirectories)
+            gocmd put -f ${OUTPUT_DIR}/model.pth ${CYVERSE_DEST}/
+            
+            if [ $? -eq 0 ]; then
+              echo "✓ Outputs uploaded successfully!"
+            else
+              echo "✗ Output upload failed!"
+              # Don't exit - try to upload logs anyway
+            fi
           else
             echo "Warning: Output directory ${OUTPUT_DIR} not found"
           fi
@@ -300,10 +326,8 @@ jobs:
           echo "Batch Size: ${BATCH_SIZE}"
           echo "Num Workers: ${NUM_WORKERS}"
           echo "Epochs: ${EPOCHS}"
-          echo "Dataset: ${DATASET}"
-          echo ""
           echo "Results uploaded to CyVerse:"
-          echo "/iplant/home/${{ secrets.CYVERSE_USERNAME }}/gpu_training_results/${USER_NAME}/${RUN_ID}/"
+          echo "${CYVERSE_OUTPUT_PATH}"
           echo ""
           echo "Completed: $(date)"
           echo "========================================================"
