@@ -15,16 +15,24 @@ Follow the prompts to connect the DE app with your Github account
 <br>
 <br>
 
-clone the [HDR-SMood-Challenge-sample](https://github.com/jeffgillan/HDR-SMood-Challenge-sample) git repository to the jupyterlab app. 
+Clone the [HDR-SMood-Challenge-sample](https://github.com/jeffgillan/HDR-SMood-Challenge-sample) git repository to the jupyterlab app. 
 
 `git clone https://github.com/jeffgillan/HDR-SMood-Challenge-sample.git`
 
+`cd HDR-SMood-Challenge-sample`
 
-`cd ~/actions-runner`
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
 
 # Runner Administration
 
 ### Start the service
+`cd ~/actions-runner`
+
 `sudo ./svc.sh start`
 
 ### Verify it started
