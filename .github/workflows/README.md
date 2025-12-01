@@ -3,6 +3,7 @@
 The Cyverse Discovery Environment (DE) lacks in powerful GPUs needed for rapid machine learning training. To solve this problem, we have set up a `runner` on github which connects the DE to powerful GPUs VMs hosted on Jetstream2 cloud computer. 
 
 <br>
+<br>
 
 ## How to use the GPU runner in Cyverse DE
 Users will likely be using the `ESIIL ML Challenge 2025` jupyterlab app in the DE. 
@@ -42,7 +43,14 @@ In the root of the repo is a file `training_config.json` which contains the para
 In order to request the GPU runner, you will make some kind of change in the `training_config.json` and push the changes back up to your branch in the github repository. By detecting some kind of change in the json file, github will trigger the workflow on the GPU machine. Once done processing, the model.pth file will be transferred to the "cyverse_output_path" specified in the json file. 
 
 <br>
+
+In the Cyverse Datastore, you must share (write access) your 'cyverse_output_path' directory with the username `jkentg`. This is very important.
+
+<br>
+
 The GPU machine is a shared resource so if multiple people try to do training runs at the same time, the runs will be queued in the order that github receives them. 
+
+<br>
 
 Once you have submitted a GPU training run (through a change and push of `training_config.json`) you can monitor the training run by going to [Actions Tab in the Github Repository](https://github.com/jeffgillan/HDR-SMood-Challenge-sample/actions). 
 
