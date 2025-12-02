@@ -98,7 +98,18 @@ The runner is a self-hosted runner. In the repo, go to _Settings_ >> _Actions_ >
 The customized code for what the runner does and how it does it is specified in [process_training.yml](process_training.yml)
 
 ## Host Computer
-The runner is hosted on a Jestream2 VM. It is a GPU XL machine with an A100 Nvidia GPU, 40GB of GPU RAM, 32vCPU cores, 120GB of system RAM, 280GB of disk storage. 
+The runner is hosted on a Jestream2 VM using the ACCESS allocation for HDR. It is a GPU XL machine with an A100 Nvidia GPU, 40GB of GPU RAM, 32vCPU cores, 120GB of system RAM, 280GB of disk storage. 
+
+### Install gocommands to transfer finished data to Cyverse Datastore
+
+```
+GOCMD_VER=$(curl -L -s https://raw.githubusercontent.com/cyverse/gocommands/main/VERSION.txt); \
+curl -L -s https://github.com/cyverse/gocommands/releases/download/${GOCMD_VER}/gocmd-${GOCMD_VER}-linux-amd64.tar.gz | tar zxvf -
+```
+Move gocmds to the system Path `sudo mv gocmd /usr/local/bin`
+
+`gocmd init`
+ 
 
 ### Start the service
 `cd ~/actions-runner`
