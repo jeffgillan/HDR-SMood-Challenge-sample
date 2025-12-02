@@ -20,15 +20,17 @@ Follow the prompts to connect the DE app with your Github account
 <br>
 <br>
 
-The ML code and the runner are located in the github repository [HDR-SMood-Challenge-sample](https://github.com/jeffgillan/HDR-SMood-Challenge-sample). Because there will be multiple people using the runner, each user needs to have their own branch in the repository. You will be cloning and pushing on your dedicated branch, **not the main branch**. 
+The ML code and the runner are located in the github repository [HDR-SMood-Challenge-sample](https://github.com/jeffgillan/HDR-SMood-Challenge-sample). Because there will be multiple people using the runner, each user needs to have their own branch in the repository. You will be cloning and pushing on your dedicated branch, **not the main branch**. Best practices would be to clone the repo to the directory `~/data-store`.
 
-Best practices would be to clone the repo to the directory `~/data-store`.
+Clone using the Terminal:
 
 `git clone --branch <branch-name> https://github.com/jeffgillan/HDR-SMood-Challenge-sample.git`
 
-Navigate into the cloned repo directory 
+<br>
 
-`cd HDR-SMood-Challenge-sample`
+Clone using the Git Widget:
+
+
 
 <br>
 <br>
@@ -52,7 +54,7 @@ In order to request the GPU runner, you will make some kind of change in the `tr
 #### Editing the 'training_config.json' file
 Using the terminal, you can open a document editor by typing `nano training_config.json`. Make edits then save the file by pressing crtl+s.
 
-Alternatively, you can edit the json file by right clicking on the file 
+Alternatively, you can edit the json file by right clicking on the file .......
 
 <br>
 
@@ -62,6 +64,23 @@ In the Cyverse Datastore, create a directory in your personal account. This dire
 
 <br>
 <br>
+
+#### Push changes to your branch of the github repository
+
+Using the terminal:
+
+`git add training_config.json`
+
+`git commit -m 'runner submission'`
+
+`git push`
+
+<br>
+<br>
+
+Using the Git Widgit:
+
+
 
 #### Monitoring the Workflow
 Once you have submitted a GPU training run (through a change and push of `training_config.json`) you can monitor the training run by going to [Actions Tab in the Github Repository](https://github.com/jeffgillan/HDR-SMood-Challenge-sample/actions). 
