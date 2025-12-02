@@ -1,6 +1,6 @@
 # Jetstream2 Runner
 
-The Cyverse Discovery Environment (DE) lacks in powerful GPUs needed for rapid machine learning training. To solve this problem, we have set up a `runner` on github which connects the DE to powerful GPUs VMs hosted on Jetstream2 cloud computer. 
+The Cyverse Discovery Environment (DE) lacks in powerful GPUs needed for rapid machine learning training. To solve this problem, we have set up a `runner` on github which connects the DE to powerful GPUs VMs hosted on Jetstream2 cloud computer. Two simultaneous processes can occur on the GPU machine. On a single request, the user gets the entire GPU. If another request comes in, it will share all resources relatively equally. If a third request comes in, it is queued until a workflow is available.
 
 <br>
 <br>
