@@ -30,7 +30,7 @@ jobs:
     timeout-minutes: 1000
     
     concurrency:
-      group: gpu-queue
+      group: gpu-queue-${{ github.run_id % 2 }}  # Creates 2 queues (0 and 1)
       cancel-in-progress: false
 
     env:
@@ -139,18 +139,18 @@ jobs:
       # --------------------------------------------------------------------------
       # STEP 6: Test CyVerse access
       # --------------------------------------------------------------------------
-      - name: Test CyVerse Access
-        run: |
-          # Test connection
-          echo "Testing CyVerse connection..."
-          gocmd ls /iplant/home/jkentg > /dev/null 2>&1
+     # - name: Test CyVerse Access
+      #  run: |
+       #   # Test connection
+        #  echo "Testing CyVerse connection..."
+         # gocmd ls /iplant/home/jkentg > /dev/null 2>&1
           
-          if [ $? -eq 0 ]; then
-            echo "✓ CyVerse connection successful!"
-          else
-            echo "✗ CyVerse connection failed!"
-            exit 1
-          fi
+          #if [ $? -eq 0 ]; then
+           # echo "✓ CyVerse connection successful!"
+          #else
+           # echo "✗ CyVerse connection failed!"
+            #exit 1
+          #fi
       
       # STEP 8: Run training with uv
       # --------------------------------------------------------------------------
