@@ -97,6 +97,9 @@ The runner is a self-hosted runner. In the repo, go to _Settings_ >> _Actions_ >
 
 The customized code for what the runner does and how it does it is specified in [process_training.yml](process_training.yml)
 
+## Host Computer
+The runner is hosted on a Jestream2 VM. It is a GPU XL machine with an A100 Nvidia GPU, 40GB of GPU RAM, 32vCPU cores, 120GB of system RAM, 280GB of disk storage. 
+
 ### Start the service
 `cd ~/actions-runner`
 
