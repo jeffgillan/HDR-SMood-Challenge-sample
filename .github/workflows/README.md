@@ -51,21 +51,21 @@ In order to request the GPU runner, you will make some kind of change in the `tr
 
 <br>
 
-#### Editing the 'training_config.json' file
+### Editing the 'training_config.json' file
 Using the terminal, you can open a document editor by typing `nano training_config.json`. Make edits then save the file by pressing crtl+s.
 
 Alternatively, you can edit the json file by right clicking on the file .......
 
 <br>
 
-#### Notes on cyverse_output_path
+### Notes on cyverse_output_path
 
 In the Cyverse Datastore, create a directory in your personal account. This directory will be the path for 'cyverse_output_path'. Then you need to share (write access) your 'cyverse_output_path' directory with the username `jkentg`. This is very important, otherwise the model weights will not be delivered to your output directory. 
 
 <br>
 <br>
 
-#### Push changes to your branch of the github repository
+### Push changes to your branch of the github repository
 
 Using the terminal:
 
@@ -82,8 +82,15 @@ Using the Git Widgit:
 
 
 
-#### Monitoring the Workflow
+### Monitoring the Workflow
 Once you have submitted a GPU training run (through a change and push of `training_config.json`) you can monitor the training run by going to [Actions Tab in the Github Repository](https://github.com/jeffgillan/HDR-SMood-Challenge-sample/actions). 
+
+<br>
+<br>
+
+### Results
+
+The workflow should have deposited the output model weights file `model_<data/time stamp>.pth` into the directory "cyverse_output_path". 
 
 <br>
 <br>
