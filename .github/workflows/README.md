@@ -8,6 +8,8 @@ The Cyverse Discovery Environment (DE) lacks in powerful GPUs needed for rapid m
 ## How to use the GPU runner in Cyverse DE
 Users will likely be using the `ESIIL ML Challenge 2025` jupyterlab app in the DE. 
 
+<br>
+<br>
 
 In the terminal of jupyterlab, authenticate to github by typing:
 
@@ -18,7 +20,7 @@ Follow the prompts to connect the DE app with your Github account
 <br>
 <br>
 
-The ML code and the runner are located in the github repository [HDR-SMood-Challenge-sample](https://github.com/jeffgillan/HDR-SMood-Challenge-sample). Because there will be multiple people using the runner, each user needs to have their own branch in the repository. You will be cloning and pushing on your dedicated branch, not the main branch. 
+The ML code and the runner are located in the github repository [HDR-SMood-Challenge-sample](https://github.com/jeffgillan/HDR-SMood-Challenge-sample). Because there will be multiple people using the runner, each user needs to have their own branch in the repository. You will be cloning and pushing on your dedicated branch, **not the main branch**. 
 
 Best practices would be to clone the repo to the directory `~/data-store`.
 
@@ -27,6 +29,9 @@ Best practices would be to clone the repo to the directory `~/data-store`.
 Navigate into the cloned repo directory 
 
 `cd HDR-SMood-Challenge-sample`
+
+<br>
+<br>
 
 In the root of the repo is a file `training_config.json` which contains the parameters of your training run. 
 
@@ -42,9 +47,16 @@ In the root of the repo is a file `training_config.json` which contains the para
 
 In order to request the GPU runner, you will make some kind of change in the `training_config.json` and push the changes back up to your branch in the github repository. By detecting some kind of change in the json file, github will trigger the workflow on the GPU machine. Once done processing, the model.pth file will be transferred to the "cyverse_output_path" specified in the json file. 
 
+#### Editing the 'training_config.json' file
+Using the terminal, you can open a document editor by typing `nano training_config.json`. Make edits then save the file by pressing crtl+s.
+
+Alternatively, you can edit the json file by right clicking on the file 
+
 <br>
 
-In the Cyverse Datastore, you must share (write access) your 'cyverse_output_path' directory with the username `jkentg`. This is very important.
+#### Notes on cyverse_output_path
+
+In the Cyverse Datastore, you must create and share (write access) your 'cyverse_output_path' directory with the username `jkentg`. This is very important.
 
 <br>
 
