@@ -93,6 +93,10 @@ Once you have submitted a GPU training run (through a change and push of `traini
 
 # Runner Administration
 
+The runner is a self-hosted runner. In the repo, go to _Settings_ >> _Actions_ >> _Runners_ >> _New self-hosted runner_.  It will include instructions on how to download, install, and test run the runner on the host computer. [Additional documentation](https://docs.github.com/en/actions/how-tos/manage-runners/self-hosted-runners/add-runners). 
+
+The customized code for what the runner does and how it does it is specified in [process_training.yml](.github/workflows/process_training.yml)
+
 ### Start the service
 `cd ~/actions-runner`
 
