@@ -97,6 +97,23 @@ The runner is a self-hosted runner. In the repo, go to _Settings_ >> _Actions_ >
 
 The customized code for what the runner does and how it does it is specified in [process_training.yml](process_training.yml)
 
+### Start the service
+Install the service that will keep running listening all the time, and will restart automatically when the VM is rebooted or unshelved. 
+
+`cd ~/actions-runner`
+
+`sudo ./svc.sh install`
+
+`sudo ./svc.sh start`
+
+`sudo ./svc.sh status`
+
+
+### Verify in GitHub
+Go to: Your repo → Settings → Actions → Runners
+You should see your runner with green "Idle" status.
+
+
 ## Host Computer
 The runner is hosted on a Jestream2 VM using the ACCESS allocation for HDR. It is a GPU XL machine with an A100 Nvidia GPU, 40GB of GPU RAM, 32vCPU cores, 120GB of system RAM, 280GB of disk storage. 
 
@@ -111,15 +128,4 @@ Move gocmds to the system Path `sudo mv gocmd /usr/local/bin`
 `gocmd init`
  
 
-### Start the service
-`cd ~/actions-runner`
 
-`sudo ./svc.sh start`
-
-### Verify it started
-`sudo ./svc.sh status`
-
-
-### Verify in GitHub
-Go to: Your repo → Settings → Actions → Runners
-You should see your runner with green "Idle" status.
