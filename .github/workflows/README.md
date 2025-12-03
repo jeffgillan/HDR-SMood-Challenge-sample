@@ -30,7 +30,7 @@ Clone using the Terminal:
 
 Clone using the Git Widget:
 
-<img width="866" height="476" alt="Screenshot 2025-12-03 at 8 14 10 AM" src="https://github.com/user-attachments/assets/6cbc9b16-bdd8-4f64-8087-59427c6c2fb5" />
+<img width="566" height="276" alt="Screenshot 2025-12-03 at 8 14 10 AM" src="https://github.com/user-attachments/assets/6cbc9b16-bdd8-4f64-8087-59427c6c2fb5" />
 
 
 <br>
