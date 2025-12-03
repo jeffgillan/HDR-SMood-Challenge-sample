@@ -35,6 +35,7 @@ Clone using the Git Widget:
 
 <br>
 <br>
+<br>
 
 In the root of the repo is a file `training_config.json` which contains the parameters of your training run. 
 
@@ -55,13 +56,23 @@ In order to request the GPU runner, you will make some kind of change in the `tr
 ### Editing the 'training_config.json' file
 Using the terminal, you can open a document editor by typing `nano training_config.json`. Make edits then save the file by pressing crtl+s.
 
-Alternatively, you can edit the json file by right clicking on the file .......
+Alternatively, you can edit the json file by right clicking on the file >>> Open With >>> Editor
+
+<img width="479" height="276" alt="Screenshot 2025-12-03 at 8 18 11 AM" src="https://github.com/user-attachments/assets/a5e48e5d-fc32-4387-a8b7-5247a24192cc" />
+
 
 <br>
 
 ### Notes on cyverse_output_path
 
-In the Cyverse Datastore, create a directory in your personal account. This directory will be the path for 'cyverse_output_path'. Then you need to share (write access) your 'cyverse_output_path' directory with the username `jkentg`. This is very important, otherwise the model weights will not be delivered to your output directory. 
+In the Cyverse Datastore, create a directory in your personal account. This directory will be the path for 'cyverse_output_path'. 
+
+**!!Important!!** You need to share (write access) your 'cyverse_output_path' directory with the username `jkentg`. This is very important, otherwise the model weights will not be delivered to your output directory. 
+
+<img width="464" height="405" alt="Screenshot 2025-12-03 at 8 26 32 AM" src="https://github.com/user-attachments/assets/a241c32d-4104-4907-a3c2-77a5679a4c5c" />
+
+<img width="405" height="167" alt="Screenshot 2025-12-03 at 8 28 44 AM" src="https://github.com/user-attachments/assets/58b542bd-65b3-4aad-a8c6-d47f37ba0938" />
+
 
 <br>
 <br>
@@ -81,7 +92,10 @@ Using the terminal:
 
 Using the Git Widgit:
 
+<img width="187" height="489" alt="Screenshot 2025-12-03 at 8 22 03 AM" src="https://github.com/user-attachments/assets/0323f78e-0966-49e3-90cd-e5c2a96da1be" />
 
+<br>
+<br>
 
 ### Monitoring the Workflow
 Once you have submitted a GPU training run (through a change and push of `training_config.json`) you can monitor the training run by going to [Actions Tab in the Github Repository](https://github.com/jeffgillan/HDR-SMood-Challenge-sample/actions). 
