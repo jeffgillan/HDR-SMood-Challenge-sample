@@ -1,7 +1,7 @@
 {
-  "script_path": "baselines/training/BioClip2/train.py",
+  "script_path": "baselines/training/BioClip2-ft-did/train.py",
   "epochs": 100,
-  "batch_size": 32,
-  "num_workers": 8,
-  "cyverse_output_path": "/iplant/home/esokol/ESIIL_hackathon_testing/20251204_1424_runner/"
+  "batch_size": 128,
+  "num_workers": 16,
+  "cyverse_output_path": "/iplant/home/jgillan/hackathon"
 }
