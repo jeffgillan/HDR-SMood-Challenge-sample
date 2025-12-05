@@ -70,10 +70,14 @@ Alternatively, you can edit the json file by right clicking on the file >>> Open
 
 
 <br>
+<br>
 
 ### 5. Create Output Folder in Cyverse Datastore
 
 In the Cyverse Datastore, create a directory in your personal account. This directory will be the path for 'cyverse_output_path'. 
+
+<br>
+<br>
 
 ### 6. Share the Output Folder 
 **!!Important!!** You need to share (write access) your 'cyverse_output_path' directory with the username `jkentg`. This is very important, otherwise the model weights will not be delivered to your output directory. 
