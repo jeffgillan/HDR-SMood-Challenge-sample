@@ -1,5 +1,6 @@
 
-<img width="1050" height="584" alt="Screenshot 2025-12-04 at 4 40 30 PM" src="https://github.com/user-attachments/assets/6d272534-6a40-4805-95f2-43f9b07d5ba7" />
+<img width="1038" height="303" alt="Screenshot 2025-12-04 at 8 48 26 PM" src="https://github.com/user-attachments/assets/a41f64b9-8968-4f14-8e1c-a7639a5771f4" />
+
 
 
 # Jetstream2 Runner
@@ -10,6 +11,12 @@ The Cyverse Discovery Environment (DE) lacks in powerful GPUs needed for rapid m
 <br>
 
 ## How to use the GPU runner in Cyverse DE
+
+<img width="1038" height="266" alt="Screenshot 2025-12-04 at 8 48 50 PM" src="https://github.com/user-attachments/assets/01abd8f1-d20d-488f-b298-21a5980cb03a" />
+
+
+
+
 ### 1. Launch a Cyverse App
 Users will likely be using the `ESIIL ML Challenge 2025` jupyterlab app in the DE. 
 
