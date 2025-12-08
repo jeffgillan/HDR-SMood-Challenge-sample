@@ -24,7 +24,7 @@ Users will likely be using the `ESIIL ML Challenge 2025` jupyterlab app in the D
 <br>
 <br>
 
-### 2. Authenticate with Gihhub
+### 2. Authenticate with Github
 In the terminal of jupyterlab, authenticate to github by typing:
 
 `gh auth login` 
