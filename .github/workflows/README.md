@@ -121,11 +121,11 @@ Using the Git Widgit:
 ### 8. Monitoring the Workflow
 Once you have submitted a GPU training run (through a change and push of `training_config.json`) you can monitor the training run by going to [Actions Tab in the Github Repository](https://github.com/jeffgillan/HDR-SMood-Challenge-sample/actions). Once on the Actions pages, you can click on the running workflow.
 
-<img width="2801" height="920" alt="Screenshot from 2025-12-08 12-12-10" src="https://github.com/user-attachments/assets/2f3eb4d5-72b9-4ba2-b3b7-f259baae2b21" />
+<img width="801" height="520" alt="Screenshot from 2025-12-08 12-12-10" src="https://github.com/user-attachments/assets/2f3eb4d5-72b9-4ba2-b3b7-f259baae2b21" />
 
 <br>
 <br>
-<img width="1736" height="1454" alt="Screenshot from 2025-12-08 12-12-59" src="https://github.com/user-attachments/assets/55658793-e7f3-469b-b0d7-254feda532ff" />
+<img width="736" height="900" alt="Screenshot from 2025-12-08 12-12-59" src="https://github.com/user-attachments/assets/55658793-e7f3-469b-b0d7-254feda532ff" />
 
 ### 9. Results
 
