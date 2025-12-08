@@ -181,3 +181,8 @@ Move gocmds to the system Path `sudo mv gocmd /usr/local/bin`
 ## Install uv
 `curl -LsSf https://astral.sh/uv/install.sh | sh`
 
+## Resource Use
+
+Shows GPU compute utilization % and memory
+`watch -n 1 'nvidia-smi --query-gpu=utilization.gpu,utilization.memory,memory.used,memory.total --format=csv'`
+
