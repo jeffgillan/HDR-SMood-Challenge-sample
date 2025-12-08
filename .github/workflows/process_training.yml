@@ -219,51 +219,49 @@ jobs:
           # Generate timestamp for the summary filename
           SUMMARY_FILE="training_summary_${TIMESTAMP}.txt"
     
-          # Create the summary file
-          cat > ${SUMMARY_FILE} <<'EOF'
-======================================================
-TRAINING JOB SUMMARY
-======================================================
-Status: ${{ job.status }}
-Run ID: ${RUN_ID}
-User: ${USER_NAME}
-Repository: ${USER_REPO}
-Branch: ${USER_BRANCH}
+          # Create summary file using echo statements (no heredoc)
+          echo "======================================================" > ${SUMMARY_FILE}
+          echo "TRAINING JOB SUMMARY" >> ${SUMMARY_FILE}
+          echo "======================================================" >> ${SUMMARY_FILE}
+          echo "Status: ${{ job.status }}" >> ${SUMMARY_FILE}
+          echo "Run ID: ${RUN_ID}" >> ${SUMMARY_FILE}
+          echo "User: ${USER_NAME}" >> ${SUMMARY_FILE}
+          echo "Repository: ${USER_REPO}" >> ${SUMMARY_FILE}
+          echo "Branch: ${USER_BRANCH}" >> ${SUMMARY_FILE}
+          echo "" >> ${SUMMARY_FILE}
+          echo "======================================================" >> ${SUMMARY_FILE}
+          echo "TRAINING CONFIGURATION" >> ${SUMMARY_FILE}
+          echo "======================================================" >> ${SUMMARY_FILE}
+          echo "Script: ${SCRIPT_PATH}" >> ${SUMMARY_FILE}
+          echo "Batch Size: ${BATCH_SIZE}" >> ${SUMMARY_FILE}
+          echo "Num Workers: ${NUM_WORKERS}" >> ${SUMMARY_FILE}
+          echo "Epochs: ${EPOCHS}" >> ${SUMMARY_FILE}
+          echo "Output Directory: ${OUTPUT_DIR}" >> ${SUMMARY_FILE}
+          echo "" >> ${SUMMARY_FILE}
+          echo "======================================================" >> ${SUMMARY_FILE}
+          echo "CYVERSE UPLOAD INFORMATION" >> ${SUMMARY_FILE}
+          echo "======================================================" >> ${SUMMARY_FILE}
+          echo "CyVerse Destination: ${CYVERSE_OUTPUT_PATH}" >> ${SUMMARY_FILE}
+          echo "" >> ${SUMMARY_FILE}
+          echo "======================================================" >> ${SUMMARY_FILE}
+          echo "TIMING INFORMATION" >> ${SUMMARY_FILE}
+          echo "======================================================" >> ${SUMMARY_FILE}
+          echo "Job Timestamp: ${TIMESTAMP}" >> ${SUMMARY_FILE}
+          echo "Completed: $(date)" >> ${SUMMARY_FILE}
+          echo "" >> ${SUMMARY_FILE}
+          echo "======================================================" >> ${SUMMARY_FILE}
+          echo "GPU INFORMATION" >> ${SUMMARY_FILE}
+          echo "======================================================" >> ${SUMMARY_FILE}
+          nvidia-smi --query-gpu=name,memory.total,memory.used --format=csv,noheader >> ${SUMMARY_FILE}
+          echo "" >> ${SUMMARY_FILE}
+          echo "======================================================" >> ${SUMMARY_FILE}
+          echo "NOTES" >> ${SUMMARY_FILE}
+          echo "======================================================" >> ${SUMMARY_FILE}
+          echo "This training job was executed on a self-hosted runner" >> ${SUMMARY_FILE}
+          echo "with GPU acceleration. Results have been uploaded to" >> ${SUMMARY_FILE}
+          echo "the specified CyVerse DataStore location." >> ${SUMMARY_FILE}
+          echo "======================================================" >> ${SUMMARY_FILE}
 
-======================================================
-TRAINING CONFIGURATION
-======================================================
-Script: ${SCRIPT_PATH}
-Batch Size: ${BATCH_SIZE}
-Num Workers: ${NUM_WORKERS}
-Epochs: ${EPOCHS}
-Output Directory: ${OUTPUT_DIR}
-
-======================================================
-CYVERSE UPLOAD INFORMATION
-======================================================
-CyVerse Destination: ${CYVERSE_OUTPUT_PATH}
-Model File: Will be named with timestamp suffix
-
-======================================================
-TIMING INFORMATION
-======================================================
-Started: ${TIMESTAMP}
-Completed: $(date)
-
-======================================================
-GPU INFORMATION
-======================================================
-$(nvidia-smi --query-gpu=name,memory.total,memory.used --format=csv,noheader)
-
-======================================================
-NOTES
-======================================================
-This training job was executed on a self-hosted runner
-with GPU acceleration. Results have been uploaded to
-the specified CyVerse DataStore location.
-======================================================
-EOF
 
           echo "✓ Summary file created: ${SUMMARY_FILE}"
     
