@@ -91,18 +91,7 @@ The computing infrastructure for this ML challenge is provided by [Cyverse](http
 
 ## Training
 
-If you are running the scripts within the [`ESIIL ML Challenge 2025`](https://de.cyverse.org/apps/de/165baf1e-be83-11f0-bf87-008cfa5ae621) Cyverse app, all the software has already been installed:
-
-```
-python HDR-SMood-Challenge-sample/baselines/training/BioClip2/train.py --batch_size 16 --num_workers 4 --epochs 100
-```
-<br>
-
-If you need to install all the software: 
-
-Install uv:
-
-`curl -LsSf https://astral.sh/uv/install.sh | sh`
+If you are running the scripts within the [`ESIIL ML Challenge 2025`](https://de.cyverse.org/apps/de/165baf1e-be83-11f0-bf87-008cfa5ae621): 
 
 with `uv` type:
 ```
@@ -159,9 +148,7 @@ Hugging Face token passed to `datasets.load_dataset` for gated/private datasets 
 
 ## Evaluation
 Aftering training, you can locally evaluate your model by running the following:
-```
-python HDR-SMood-Challenge-sample/baselines/training/BioClip2/evaluation.py --batch_size 16 --num_workers 4
-```
+
 
 with `uv` do:
 ```
