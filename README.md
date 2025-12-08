@@ -81,10 +81,9 @@ More information on the dataset [here](https://www.codabench.org/competitions/98
 <br>
 <br>
 
-## Installation
-If you a running the scripts in a docker container in Cyverse, the sofware is already totally installed. 
+## Computing Infrastructure
 
-If you need install the python libraries, you will do so during the _training_ command. 
+The computing infrastructure for this ML challenge is provided by [Cyverse](https://user.cyverse.org/) at the University of Arizona. The infrastructure includes cloud Data Storage, cloud computing containerized apps (e.g., jupyter notebook), and access to a powerful GPU machine hosted on the [Jetstream2](/.github/workflows) cloud. 
 
 
 <br>
@@ -92,7 +91,7 @@ If you need install the python libraries, you will do so during the _training_ c
 
 ## Training
 
-If you are running the scripts within a Cyverse container and all the software has already been installed:
+If you are running the scripts within the `ESIIL ML Challenge 2025` Cyverse app, all the software has already been installed:
 
 ```
 python HDR-SMood-Challenge-sample/baselines/training/BioClip2/train.py --batch_size 16 --num_workers 4 --epochs 100
