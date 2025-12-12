@@ -14,8 +14,8 @@ This repository contains baseline training code and submission templates for the
 
 ```
 .
-├── README.md                 # This file
-├── LICENSE                   # MIT License
+├── README.md                # This file
+├── LICENSE                  # MIT License
 ├── pyproject.toml           # Project metadata (Python 3.12+)
 ├── requirements.txt         # Dependencies
 ├── uv.lock                  # uv lock file for reproducibility
@@ -52,16 +52,25 @@ This repository contains baseline training code and submission templates for the
 │       ├── BioClip2-ft/
 │       ├── BioClip2-ft-did/
 │       └── Dino2/
+│
+└── notebooks/
+    └── train-data-exploration.ipynb
 ```
 <br>
 <br>
+
+> [!IMPORTANT]  
+> Do not zip the whole folder submission folder when submitting your model to Codabench. ***Only*** select the `model.py` and relevant weight and requirements files to make the tarball.
 
 ## The Dataset
 [![Dataset](https://img.shields.io/badge/Dataset-HuggingFace-FFD700)](https://huggingface.co/datasets/imageomics/sentinel-beetles)
 The Sentinel Beetles Dataset is hosted on HuggingFace and is **publicly accessible** - no authentication required:
 
+#### Training Data Exploration
 - **Dataset**: https://huggingface.co/datasets/imageomics/sentinel-beetles
 - **Access**: Downloads automatically on first run of _train.py_
+
+This repository also includes `train-data-exploration.ipynb` which loads the training data from Hugging Face to perform various data analytics. Specifically, it looks at distributions of images, species, SPEI values, etc. over the various domains. To run this notebook, first clone this repository and create a fresh conda environment, then install the requirements file:
 
 **Optional:** If you encounter HuggingFace API rate limits or need access to private datasets, create a token:
 1. Create a HuggingFace account: https://huggingface.co/join
