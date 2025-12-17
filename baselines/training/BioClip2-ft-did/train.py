@@ -7,6 +7,8 @@ import torch.optim as optim
 from torch.utils.data import DataLoader
 from tqdm import tqdm
 import numpy as np
+import pandas as pd
+import re
 from datasets import load_dataset
 
 from utils import (
@@ -111,6 +113,35 @@ def main():
         "imageomics/sentinel-beetles",
         token=args.hf_token,
     )
+
+    # add columns to data so it matches bioclip training data
+    train_nrow = len(ds["train"])
+
+    # add columns for kingdom, phylum, class, order, family
+    #  these columns are the same for every observation
+    ds["train"] = ds["train"].add_column("kingdom", ["Animalia"] * train_nrow)
+    ds["train"] = ds["train"].add_column("phylum", ["Arthropoda"] * train_nrow)
+    ds["train"] = ds["train"].add_column("class", ["Insecta"] * train_nrow)
+    ds["train"] = ds["train"].add_column("order", ["Coleoptera"] * train_nrow)
+    ds["train"] = ds["train"].add_column("family", ["Carabidae"] * train_nrow)
+
+    # add genus and species from scientific name column
+    def split_sci_name(name):
+        # remove subgenus (in parentheses)
+        paren_regex = re.compile(r"\s*\([^)]*\)\s*")
+        no_subgenus = paren_regex.sub(" ", name).strip()
+    
+        # split string into genus and species + subspecies
+        split_name = no_subgenus.split()
+        genus = split_name[0]
+        species = " ".join(split_name[1:]) if len(split_name) > 1 else None
+
+        return{
+            "genus": genus,
+            "species": species
+        }
+
+    ds["train"] = ds["train"].map(split_sci_name, input_columns = "scientificName")
     
     known_domain_ids = list(set([x for x in ds["train"]["domainID"]]))
     save_dir = Path(__file__).resolve().parent
