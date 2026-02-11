@@ -135,15 +135,19 @@ jobs:
           echo "  CyVerse Destination: ${CYVERSE_OUTPUT_PATH}"
           echo "================================================"
     
-      
+          # Generate single timestamp for this entire job
+          TIMESTAMP=$(date +"%Y-%m-%d_%H-%M-%S")
+          echo "TIMESTAMP=${TIMESTAMP}" >> $GITHUB_ENV
+          echo "Job timestamp: ${TIMESTAMP}"
+          
       # --------------------------------------------------------------------------
-      # STEP 6: Test CyVerse access
+      # STEP 5: Test CyVerse access
       # --------------------------------------------------------------------------
       - name: Test CyVerse Access
         run: |
           # Test connection
           echo "Testing CyVerse connection..."
-          gocmd ls /iplant/home/jkentg > /dev/null 2>&1
+          gocmd ls ${CYVERSE_OUTPUT_PATH} > /dev/null 2>&1
           
           if [ $? -eq 0 ]; then
             echo "✓ CyVerse connection successful!"
@@ -152,7 +156,7 @@ jobs:
             exit 1
           fi
       
-      # STEP 8: Run training with uv
+      # STEP 6: Run training with uv
       # --------------------------------------------------------------------------
       - name: Run Training
         run: |
@@ -203,9 +207,75 @@ jobs:
             echo "================================================"
             exit 1
           fi
-      
+
       # --------------------------------------------------------------------------
-      # STEP 9: Upload results to CyVerse
+      # STEP 7: Create Training Summary File
+      # --------------------------------------------------------------------------
+      - name: Create Training Summary File
+        if: always()
+        run: |
+          echo "Creating training summary file..."
+    
+          # Generate timestamp for the summary filename
+          SUMMARY_FILE="training_summary_${TIMESTAMP}.txt"
+    
+          # Create summary file using echo statements (no heredoc)
+          echo "======================================================" > ${SUMMARY_FILE}
+          echo "TRAINING JOB SUMMARY" >> ${SUMMARY_FILE}
+          echo "======================================================" >> ${SUMMARY_FILE}
+          echo "Status: ${{ job.status }}" >> ${SUMMARY_FILE}
+          echo "Run ID: ${RUN_ID}" >> ${SUMMARY_FILE}
+          echo "User: ${USER_NAME}" >> ${SUMMARY_FILE}
+          echo "Repository: ${USER_REPO}" >> ${SUMMARY_FILE}
+          echo "Branch: ${USER_BRANCH}" >> ${SUMMARY_FILE}
+          echo "" >> ${SUMMARY_FILE}
+          echo "======================================================" >> ${SUMMARY_FILE}
+          echo "TRAINING CONFIGURATION" >> ${SUMMARY_FILE}
+          echo "======================================================" >> ${SUMMARY_FILE}
+          echo "Script: ${SCRIPT_PATH}" >> ${SUMMARY_FILE}
+          echo "Batch Size: ${BATCH_SIZE}" >> ${SUMMARY_FILE}
+          echo "Num Workers: ${NUM_WORKERS}" >> ${SUMMARY_FILE}
+          echo "Epochs: ${EPOCHS}" >> ${SUMMARY_FILE}
+          echo "Output Directory: ${OUTPUT_DIR}" >> ${SUMMARY_FILE}
+          echo "" >> ${SUMMARY_FILE}
+          echo "======================================================" >> ${SUMMARY_FILE}
+          echo "CYVERSE UPLOAD INFORMATION" >> ${SUMMARY_FILE}
+          echo "======================================================" >> ${SUMMARY_FILE}
+          echo "CyVerse Destination: ${CYVERSE_OUTPUT_PATH}" >> ${SUMMARY_FILE}
+          echo "" >> ${SUMMARY_FILE}
+          echo "======================================================" >> ${SUMMARY_FILE}
+          echo "TIMING INFORMATION" >> ${SUMMARY_FILE}
+          echo "======================================================" >> ${SUMMARY_FILE}
+          echo "Job Timestamp: ${TIMESTAMP}" >> ${SUMMARY_FILE}
+          echo "Completed: $(date)" >> ${SUMMARY_FILE}
+          echo "" >> ${SUMMARY_FILE}
+          echo "======================================================" >> ${SUMMARY_FILE}
+          echo "GPU INFORMATION" >> ${SUMMARY_FILE}
+          echo "======================================================" >> ${SUMMARY_FILE}
+          nvidia-smi --query-gpu=name,memory.total,memory.used --format=csv,noheader >> ${SUMMARY_FILE}
+          echo "" >> ${SUMMARY_FILE}
+          echo "======================================================" >> ${SUMMARY_FILE}
+          echo "NOTES" >> ${SUMMARY_FILE}
+          echo "======================================================" >> ${SUMMARY_FILE}
+          echo "This training job was executed on a self-hosted runner" >> ${SUMMARY_FILE}
+          echo "with GPU acceleration. Results have been uploaded to" >> ${SUMMARY_FILE}
+          echo "the specified CyVerse DataStore location." >> ${SUMMARY_FILE}
+          echo "======================================================" >> ${SUMMARY_FILE}
+
+
+          echo "✓ Summary file created: ${SUMMARY_FILE}"
+    
+          # Save filename for upload step
+          echo "SUMMARY_FILE=${SUMMARY_FILE}" >> $GITHUB_ENV
+    
+          # Display the summary
+          echo ""
+          echo "Summary file contents:"
+          cat ${SUMMARY_FILE}
+
+    
+      # --------------------------------------------------------------------------
+      # STEP 8: Upload results to CyVerse
       # --------------------------------------------------------------------------
       - name: Upload Results to CyVerse
         if: always()
@@ -215,7 +285,6 @@ jobs:
           echo "================================================"
 
           # Generate timestamp for unique filename
-          TIMESTAMP=$(date +"%Y-%m-%d_%H-%M-%S")
           MODEL_NAME="model"
           TIMESTAMPED_MODEL="${MODEL_NAME}_${TIMESTAMP}.pth"
 
@@ -252,6 +321,21 @@ jobs:
             echo "Warning: Output directory ${OUTPUT_DIR} not found"
           fi
 
+          # Upload training summary file
+          if [ -f ${SUMMARY_FILE} ]; then
+            echo ""
+            echo "Uploading training summary file..."
+            gocmd put ${SUMMARY_FILE} ${CYVERSE_DEST}/${SUMMARY_FILE}
+      
+            if [ $? -eq 0 ]; then
+              echo "✓ Summary file uploaded successfully as ${SUMMARY_FILE}!"
+            else
+              echo "✗ Summary file upload failed!"
+            fi
+          else
+            echo "Warning: Summary file not found"
+          fi
+
           echo "✓ Upload complete!"
 
           # List uploaded files
@@ -266,12 +350,17 @@ jobs:
           echo "Model Location:"
           echo "${CYVERSE_DEST}/${TIMESTAMPED_MODEL}"
           echo ""
+          echo "Summary Location:"
+          echo "${CYVERSE_DEST}/${SUMMARY_FILE}"
+          echo ""
           echo "To download in CyVerse JupyterLab:"
           echo "gocmd get ${CYVERSE_DEST}/${TIMESTAMPED_MODEL} ./model.pth"
+          echo "gocmd get ${CYVERSE_DEST}/${SUMMARY_FILE} ./summary.txt"
           echo "================================================"
+          
       
       # --------------------------------------------------------------------------
-      # STEP 10: Cleanup
+      # STEP 9: Cleanup
       # --------------------------------------------------------------------------
       - name: Cleanup
         if: always()
@@ -305,7 +394,7 @@ jobs:
           echo "✓ Cleanup complete!"
       
       # --------------------------------------------------------------------------
-      # STEP 11: Final summary
+      # STEP 10: Final summary
       # --------------------------------------------------------------------------
       - name: Training Summary
         if: always()

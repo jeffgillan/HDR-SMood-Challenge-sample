@@ -14,8 +14,8 @@ This repository contains baseline training code and submission templates for the
 
 ```
 .
-├── README.md                 # This file
-├── LICENSE                   # MIT License
+├── README.md                # This file
+├── LICENSE                  # MIT License
 ├── pyproject.toml           # Project metadata (Python 3.12+)
 ├── requirements.txt         # Dependencies
 ├── uv.lock                  # uv lock file for reproducibility
@@ -52,16 +52,25 @@ This repository contains baseline training code and submission templates for the
 │       ├── BioClip2-ft/
 │       ├── BioClip2-ft-did/
 │       └── Dino2/
+│
+└── notebooks/
+    └── train-data-exploration.ipynb
 ```
 <br>
 <br>
+
+> [!IMPORTANT]  
+> Do not zip the whole folder submission folder when submitting your model to Codabench. ***Only*** select the `model.py` and relevant weight and requirements files to make the tarball.
 
 ## The Dataset
 [![Dataset](https://img.shields.io/badge/Dataset-HuggingFace-FFD700)](https://huggingface.co/datasets/imageomics/sentinel-beetles)
 The Sentinel Beetles Dataset is hosted on HuggingFace and is **publicly accessible** - no authentication required:
 
+#### Training Data Exploration
 - **Dataset**: https://huggingface.co/datasets/imageomics/sentinel-beetles
 - **Access**: Downloads automatically on first run of _train.py_
+
+This repository also includes `train-data-exploration.ipynb` which loads the training data from Hugging Face to perform various data analytics. Specifically, it looks at distributions of images, species, SPEI values, etc. over the various domains. To run this notebook, first clone this repository and create a fresh conda environment, then install the requirements file:
 
 **Optional:** If you encounter HuggingFace API rate limits or need access to private datasets, create a token:
 1. Create a HuggingFace account: https://huggingface.co/join
@@ -81,10 +90,9 @@ More information on the dataset [here](https://www.codabench.org/competitions/98
 <br>
 <br>
 
-## Installation
-If you a running the scripts in a docker container in Cyverse, the sofware is already totally installed. 
+## Computing Infrastructure
 
-If you need install the python libraries, you will do so during the _training_ command. 
+The computing infrastructure for this ML challenge is provided by [Cyverse](https://user.cyverse.org/) at the University of Arizona. The infrastructure includes cloud Data Storage, cloud computing Jupyter Notebook app [ESIIL ML Challenge 2025](https://de.cyverse.org/apps/de/165baf1e-be83-11f0-bf87-008cfa5ae621), and access to a powerful GPU machine hosted on the [Jetstream2](/.github/workflows) cloud. 
 
 
 <br>
@@ -92,18 +100,7 @@ If you need install the python libraries, you will do so during the _training_ c
 
 ## Training
 
-If you are running the scripts within a Cyverse container and all the software has already been installed:
-
-```
-python HDR-SMood-Challenge-sample/baselines/training/BioClip2/train.py --batch_size 16 --num_workers 4 --epochs 100
-```
-<br>
-
-If you need to install all the software: 
-
-Install uv:
-
-`curl -LsSf https://astral.sh/uv/install.sh | sh`
+If you are running the scripts within the [`ESIIL ML Challenge 2025`](https://de.cyverse.org/apps/de/165baf1e-be83-11f0-bf87-008cfa5ae621): 
 
 with `uv` type:
 ```
@@ -160,9 +157,7 @@ Hugging Face token passed to `datasets.load_dataset` for gated/private datasets 
 
 ## Evaluation
 Aftering training, you can locally evaluate your model by running the following:
-```
-python HDR-SMood-Challenge-sample/baselines/training/BioClip2/evaluation.py --batch_size 16 --num_workers 4
-```
+
 
 with `uv` do:
 ```
@@ -181,11 +176,8 @@ uv run python HDR-SMood-Challenge-sample/baselines/training/BioClip2/evaluation.
 
 <br>
 <br>
+<br>
 
-## Resource Use
-
-Shows GPU compute utilization % and memory
-`watch -n 1 'nvidia-smi --query-gpu=utilization.gpu,utilization.memory,memory.used,memory.total --format=csv'`
 
 ## Python Scripts Explainer
 ### utils.py 

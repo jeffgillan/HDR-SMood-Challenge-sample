@@ -1,3 +1,9 @@
+
+
+<img width="1038" height="303" alt="Screenshot 2025-12-04 at 8 48 26 PM" src="https://github.com/user-attachments/assets/c7c8885e-cc42-44ae-b083-e8739dbc73fd" />
+
+
+
 # Jetstream2 Runner
 
 The Cyverse Discovery Environment (DE) lacks in powerful GPUs needed for rapid machine learning training. To solve this problem, we have set up a `runner` on github which connects the DE to powerful GPUs VMs hosted on Jetstream2 cloud computer. Two simultaneous processes can occur on the GPU machine. On a single request, the user gets the entire GPU. If another request comes in, it will share all resources relatively equally. If a third request comes in, it is queued until a workflow is available.
@@ -6,11 +12,19 @@ The Cyverse Discovery Environment (DE) lacks in powerful GPUs needed for rapid m
 <br>
 
 ## How to use the GPU runner in Cyverse DE
-Users will likely be using the `ESIIL ML Challenge 2025` jupyterlab app in the DE. 
+
+<img width="1038" height="266" alt="Screenshot 2025-12-04 at 8 48 50 PM" src="https://github.com/user-attachments/assets/01abd8f1-d20d-488f-b298-21a5980cb03a" />
+
+
+
+
+### 1. Launch a Cyverse App
+Users will likely be using the [`ESIIL ML Challenge 2025`](https://de.cyverse.org//apps/de/165baf1e-be83-11f0-bf87-008cfa5ae621) jupyterlab app in the DE. 
 
 <br>
 <br>
 
+### 2. Authenticate with Github
 In the terminal of jupyterlab, authenticate to github by typing:
 
 `gh auth login` 
@@ -20,6 +34,7 @@ Follow the prompts to connect the DE app with your Github account
 <br>
 <br>
 
+### 3. Clone the Repository to the Cyverse App
 The ML code and the runner are located in the github repository [HDR-SMood-Challenge-sample](https://github.com/jeffgillan/HDR-SMood-Challenge-sample). Because there will be multiple people using the runner, each user needs to have their own branch in the repository. You will be cloning and pushing on your dedicated branch, **not the main branch**. Best practices would be to clone the repo to the directory `~/data-store`.
 
 Clone using the Terminal:
@@ -37,6 +52,7 @@ Clone using the Git Widget:
 <br>
 <br>
 
+### 4. Edit the Config File
 In the root of the repo is a file `training_config.json` which contains the parameters of your training run. 
 
 ```
@@ -53,7 +69,7 @@ In order to request the GPU runner, you will make some kind of change in the `tr
 
 <br>
 
-### Editing the 'training_config.json' file
+#### Editing the 'training_config.json' file
 Using the terminal, you can open a document editor by typing `nano training_config.json`. Make edits then save the file by pressing crtl+s.
 
 Alternatively, you can edit the json file by right clicking on the file >>> Open With >>> Editor
@@ -62,11 +78,16 @@ Alternatively, you can edit the json file by right clicking on the file >>> Open
 
 
 <br>
+<br>
 
-### Notes on cyverse_output_path
+### 5. Create Output Folder in Cyverse Datastore
 
 In the Cyverse Datastore, create a directory in your personal account. This directory will be the path for 'cyverse_output_path'. 
 
+<br>
+<br>
+
+### 6. Share the Output Folder 
 **!!Important!!** You need to share (write access) your 'cyverse_output_path' directory with the username `jkentg`. This is very important, otherwise the model weights will not be delivered to your output directory. 
 
 <img width="464" height="405" alt="Screenshot 2025-12-03 at 8 26 32 AM" src="https://github.com/user-attachments/assets/a241c32d-4104-4907-a3c2-77a5679a4c5c" />
@@ -77,7 +98,7 @@ In the Cyverse Datastore, create a directory in your personal account. This dire
 <br>
 <br>
 
-### Push changes to your branch of the github repository
+### 7. Push changes to your branch of the github repository
 
 Using the terminal:
 
@@ -97,13 +118,16 @@ Using the Git Widgit:
 <br>
 <br>
 
-### Monitoring the Workflow
-Once you have submitted a GPU training run (through a change and push of `training_config.json`) you can monitor the training run by going to [Actions Tab in the Github Repository](https://github.com/jeffgillan/HDR-SMood-Challenge-sample/actions). 
+### 8. Monitoring the Workflow
+Once you have submitted a GPU training run (through a change and push of `training_config.json`) you can monitor the training run by going to [Actions Tab in the Github Repository](https://github.com/jeffgillan/HDR-SMood-Challenge-sample/actions). Once on the Actions pages, you can click on the running workflow and see the real-time output of the process!
+
+<img width="801" height="520" alt="Screenshot from 2025-12-08 12-12-10" src="https://github.com/user-attachments/assets/2f3eb4d5-72b9-4ba2-b3b7-f259baae2b21" />
 
 <br>
 <br>
+<img width="736" height="900" alt="Screenshot from 2025-12-08 12-12-59" src="https://github.com/user-attachments/assets/55658793-e7f3-469b-b0d7-254feda532ff" />
 
-### Results
+### 9. Results
 
 The workflow should have deposited the output model weights file `model_<data/time stamp>.pth` into the directory "cyverse_output_path". 
 
@@ -159,4 +183,9 @@ Move gocmds to the system Path `sudo mv gocmd /usr/local/bin`
  
 ## Install uv
 `curl -LsSf https://astral.sh/uv/install.sh | sh`
+
+## Resource Use
+
+Shows GPU compute utilization % and memory
+`watch -n 1 'nvidia-smi --query-gpu=utilization.gpu,utilization.memory,memory.used,memory.total --format=csv'`
 
