@@ -1,6 +1,6 @@
 {
   "script_path": "baselines/training/BioClip2/train.py",
-  "epochs": 100,
+  "epochs": 10,
   "batch_size": 64,
   "num_workers": 16,
   "cyverse_output_path": "/iplant/home/benjaminmaglio/hackathon"
